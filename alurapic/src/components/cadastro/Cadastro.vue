@@ -1,40 +1,39 @@
 <!-- alurapic/src/components/cadastro/Cadastro.vue -->
 
 <template>
-
-  <div>
-    <h1 class="centralizado">Cadastro</h1>
-    <h2 class="centralizado">{{ foto.titulo }}</h2>
-
-    <h2 v-if="foto._id" class="centralizado">Alterando</h2>
-    <h2 v-else class="centralizado">Incluindo</h2>
-
-    <form @submit.prevent="grava()">
-      <div class="controle">
-        <label for="titulo">TÍTULO</label>
-        <input data-vv-as="título" v-validate data-vv-rules="required|min:3|max:30" name="titulo" id="titulo" autocomplete="off" v-model="foto.titulo">
-        <span class="erro" v-show="errors.has('titulo')">{{ errors.first('titulo') }}</span>
+  <section class="py-5 text-center container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div v-if="!foto._id" class="card-header">Cadastrar</div>
+          <div v-else class="card-header">Editar {{ foto.titulo }}</div>
+          <div class="card-body">
+            <form @submit.prevent="store()" novalidate>
+              <div class="form-group">
+                <label for="titulo">Título</label>
+                <input name="titulo" type="text" class="form-control" :class="errors.has('titulo') ? 'is-invalid' : 'is-valid'" data-vv-as="título" v-validate data-vv-rules="required|min:3|max:30" autocomplete="off" v-model="foto.titulo">
+                <div class="invalid-feedback" v-show="errors.has('titulo')">{{ errors.first('titulo') }}</div>
+              </div>
+              <div class="form-group">
+                <label for="url">Url</label>
+                <input class="form-control" v-validate data-vv-rules="required" name="url" autocomplete="off" v-model="foto.url" :class="errors.has('url') ? 'is-invalid' : 'is-valid'">
+                <div class="invalid-feedback" v-show="errors.has('url')">{{ errors.first('url') }}</div>
+                <imagem-responsiva class="mt-3" v-show="foto.url" :url="foto.url" :titulo="foto.titulo"/>
+              </div>
+              <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" class="form-control" autocomplete="off" v-model="foto.descricao"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center">
+            <router-link :to="{ name: 'home' }" type="button" class="btn btn-warning">Voltar</router-link>
+            <button class="btn btn-success">Salvar</button>
+          </div>
+        </div>
       </div>
-
-      <div class="controle">
-        <label for="url">URL</label>
-        <input v-validate data-vv-rules="required" name="url" id="url" autocomplete="off" v-model="foto.url">
-        <imagem-responsiva v-show="foto.url" :url="foto.url" :titulo="foto.titulo"/>
-        <span class="erro" v-show="errors.has('titulo')">{{ errors.first('url') }}</span>
-      </div>
-
-      <div class="controle">
-        <label for="descricao">DESCRIÇÃO</label>
-        <textarea id="descricao" autocomplete="off" v-model="foto.descricao"></textarea>
-      </div>
-
-      <div class="centralizado">
-        <button type="submit">Salvar</button>
-        <router-link :to="{ name: 'home' }" type="button">Voltar</router-link>
-      </div>
-
-    </form>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -67,7 +66,7 @@ export default {
 
   methods: {
 
-    grava() {
+    store() {
 
       this.$validator.validateAll().then(success => {
 
@@ -86,33 +85,3 @@ export default {
 }
 
 </script>
-<style scoped>
-
-  .centralizado {
-    text-align: center;
-  }
-  .controle {
-    font-size: 1.2em;
-    margin-bottom: 20px;
-
-  }
-  .controle label {
-    display: block;
-    font-weight: bold;
-  }
-
- .controle label + input, .controle textarea {
-    width: 100%;
-    font-size: inherit;
-    border-radius: 5px
-  }
-
-  .centralizado {
-    text-align: center;
-  }
-
-  .erro {
-    color: red;
-  }
-
-</style>

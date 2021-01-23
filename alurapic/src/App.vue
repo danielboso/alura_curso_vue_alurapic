@@ -11,9 +11,11 @@
         </div>
       </nav>
     </header>
-    <transition name="pagina">
-      <router-view></router-view>
-    </transition>
+    <section class="py-5 text-center container">
+      <transition name="pagina">
+        <router-view></router-view>
+      </transition>
+    </section>
   </div>
 </template>
 
