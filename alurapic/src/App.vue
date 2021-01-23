@@ -1,8 +1,16 @@
 <template>
-  <div class="corpo">
-
-    <meu-menu :rotas="routes"/>
-
+  <div>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <img src="/static/image.png" width="20" height="20">
+          <strong>Alurapic</strong>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <meu-menu :rotas="routes"/>
+        </div>
+      </nav>
+    </header>
     <transition name="pagina">
       <router-view></router-view>
     </transition>

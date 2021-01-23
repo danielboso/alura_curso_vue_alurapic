@@ -1,13 +1,11 @@
 <template>
-    <nav>
-      <ul>       
-          <li v-for="rota in rotas">
-            <router-link :to="rota.path ? rota.path : '/'">
-              {{ rota.titulo }}
-            </router-link>
-          </li>
-      </ul>
-    </nav>
+  <ul class="navbar-nav mr-auto">  
+    <li class="nav-item" v-for="rota in rotas">
+      <router-link :to="rota.path ? rota.path : '/'" class="nav-link">
+        {{ rota.titulo }}
+      </router-link>
+    </li>
+  </ul>    
 </template>
 
 <script>
